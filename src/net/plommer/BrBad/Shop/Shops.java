@@ -129,7 +129,6 @@ public class Shops {
 					am += is.getAmount();
 				}
 			} else if(is != null && isCustom == true) {
-				System.out.print("TEST");
 				if(ItemsList.isCustomItem(is) == true) {
 					if(is.getItemMeta().equals(item.getItemMeta())) {
 						am += is.getAmount();
