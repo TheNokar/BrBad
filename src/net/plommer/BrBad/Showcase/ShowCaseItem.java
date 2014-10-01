@@ -1,9 +1,14 @@
 package net.plommer.BrBad.Showcase;
 
+import java.util.Random;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 public class ShowCaseItem {
@@ -13,13 +18,17 @@ public class ShowCaseItem {
 	private Location blockUnderLoc;
 	private Material type;
 	
-	public ShowCaseItem(ItemStack item, Location loc, short data) {
+	public ShowCaseItem(ItemStack item, Location loc, JavaPlugin plugin) {
 		item.setAmount(1);
+		Random rand = new Random();
+		ItemMeta im = item.getItemMeta();
+		im.setDisplayName("Displays"+rand.nextInt(500));
+		item.setItemMeta(im);
 		setLocation(loc);
 		setblockUnderLoc(blockUnderLoc);
 		setItem(loc.getWorld().dropItem(getLocation(), item));
 		getItem().setVelocity(new Vector(0, 0.1, 0));
-		
+		getItem().setMetadata("Displays", new FixedMetadataValue(plugin, 0));
 	}
 	
 	public void setItem(Item item) {
@@ -61,7 +70,7 @@ public class ShowCaseItem {
 	}
 	
 	public boolean isItem(Item item) {
-		return item.getUniqueId() == getItem().getUniqueId();
+		return item.hasMetadata("Displays");
 	}
 	
 	public void removeShowcase() {

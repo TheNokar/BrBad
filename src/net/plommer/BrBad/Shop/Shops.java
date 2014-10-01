@@ -3,6 +3,7 @@ package net.plommer.BrBad.Shop;
 import java.util.UUID;
 
 import net.plommer.BrBad.BrBad;
+import net.plommer.BrBad.Configs.Config;
 import net.plommer.BrBad.Showcase.ShowCaseItem;
 import net.plommer.BrBad.Utils.ItemsList;
 import net.plommer.BrBad.Utils.Utils;
@@ -13,7 +14,9 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class Shops {
 
@@ -73,17 +76,17 @@ public class Shops {
 		this.type = type;
 	}
 	
-	public void SetupShop() {
+	public void SetupShop(JavaPlugin plugin) {
 		if(getAttachedBlock(loc.getBlock()).getType().equals(Material.CHEST)) {
 			Sign s = (org.bukkit.block.Sign) loc.getBlock().getState();
 			String dn = Utils.removeChar(getItem().getItemMeta().getDisplayName());
 			if(dn == null) {
 				dn = getItem().getType().name();
 			}
-			s.setLine(1, Utils.buildString("&e" + getAmount()));
-			s.setLine(3, Utils.buildString("&a" + dn));
-			s.setLine(2, Utils.buildString("&e$" + getPrice()));
-			BrBad.si.add(new ShowCaseItem(getItem(), getAttachedBlock(loc.getBlock()).getLocation(), getItem().getDurability()));
+			s.setLine(2, Utils.buildString("&0" + getAmount()));
+			s.setLine(3, Utils.buildString("&0" + dn));
+			s.setLine(1, Utils.buildString("&3&n$" + getPrice()));
+			BrBad.si.add(new ShowCaseItem(getItem().clone(), getAttachedBlock(loc.getBlock()).getLocation(), plugin));
 			s.update();
 		} else {
 			Utils.sendMessage(player, "&cYou need to place the sign on a chest!");
@@ -105,9 +108,36 @@ public class Shops {
 	
 	public static void ShopClick(Shops shop, Player player, Type type) {
 		ItemStack item = shop.getItem();
-		if(player.getInventory().contains(item)) {
+		item.setAmount(shop.getAmount());
+		if(hasItemInInventory(shop.getItem(), player.getInventory()) >= shop.getAmount()) {
 			player.getInventory().removeItem(new ItemStack[] {item});
+		} else {
+			Utils.sendMessage(player, Config.player_no_item);
 		}
+		player.updateInventory();
+	}
+	
+	public static int hasItemInInventory(ItemStack item, Inventory inv) {
+		int am = 0;
+		boolean isCustom = false;
+		if(ItemsList.isCustomItem(item)) {
+			isCustom = true;
+		}
+		for(ItemStack is : inv.getContents()) {
+			if(is != null && isCustom == false) {
+				if(is.getType().equals(item.getType())) {
+					am += is.getAmount();
+				}
+			} else if(is != null && isCustom == true) {
+				System.out.print("TEST");
+				if(ItemsList.isCustomItem(is) == true) {
+					if(is.getItemMeta().equals(item.getItemMeta())) {
+						am += is.getAmount();
+					}
+				}
+			}
+		}
+		return am;
 	}
 	
 }

@@ -29,7 +29,7 @@ public class BrBad extends JavaPlugin {
 		Listeners(getServer().getPluginManager());
 		db = new DatabaseConnection(this);
 		for(Shops shop : db.getAllShops()) {
-			shop.SetupShop();
+			shop.SetupShop(this);
 		}
 	}
 	
@@ -49,7 +49,7 @@ public class BrBad extends JavaPlugin {
 	}
 	
 	public void Listeners(PluginManager pm) {
-		pm.registerEvents(new ShopListener(), this);
+		pm.registerEvents(new ShopListener(this), this);
 	}
 	
 	public static boolean isShowcaseItem(Item item) {

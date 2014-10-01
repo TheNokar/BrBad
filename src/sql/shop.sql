@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `brbad_shop` (
 	`Y` FLOAT NOT NULL,
 	`Z` FLOAT NOT NULL,
 	`world` VARCHAR(255) NOT NULL,
-	`item_name` VARCHAR(255) NOT NULL,
+	`item_name` VARCHAR(255) DEFAULT 'NONE',
 	`item_id` INTEGER NOT NULL,
 	`item_data` INTEGER NOT NULL,
 	`shop_type` VARCHAR(255) NOT NULL

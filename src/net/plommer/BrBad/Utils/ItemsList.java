@@ -44,6 +44,7 @@ public class ItemsList {
 	}
 	
 	public static boolean isCustomItem(ItemStack item) {
+		if(item == null) return false;
 		for(ItemStack is : customItems) {
 			if(is.getItemMeta().equals(item.getItemMeta())) {
 				return true;
@@ -54,7 +55,7 @@ public class ItemsList {
 
 	public static ItemStack isCustomItemByName(String i) {
 		for(ItemStack is : customItems) {
-			if(is.getItemMeta().getDisplayName().endsWith(i)) {
+			if(is.getItemMeta().getDisplayName().equals(i)) {
 				return is;
 			}
 		}

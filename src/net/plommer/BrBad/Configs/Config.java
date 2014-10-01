@@ -6,6 +6,7 @@ import java.util.Set;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import net.plommer.BrBad.BrBad;
+import net.plommer.BrBad.Utils.Utils;
 
 public class Config {
 	
@@ -24,6 +25,8 @@ public class Config {
 	public static String table_prefix = config.getString("mysql.table_prefix");
 	
 	//Messages
+	public static FileConfiguration msg = BrBad.gc.get("messages").getCustomConfig();
+	public static String player_no_item = msg.getString("shop.player_no_item");
 	
 	//Item Cooker
 	public static FileConfiguration itemcooker = BrBad.gc.get("item_cooker").getCustomConfig();

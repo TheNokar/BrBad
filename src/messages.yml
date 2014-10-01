@@ -1,7 +1,7 @@
 shop:
     sold_complete: '&cYou have sold item {item}'
     buy_complete: '&bYou have bought {amount} {item}'
-    shop_create: '&aYou created shop that sells {item}'
+    player_no_item: '&cYou do not have enough items to sell!'
 cop_stick:
     jail_name: jail
     drugs_found_player: '&b{cop} &cfound drugs on you! You have been jailed!'
