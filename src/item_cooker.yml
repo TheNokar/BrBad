@@ -1,0 +1,6 @@
+items:
+     meth:
+        crafting: 353
+        item_type: 353
+        enchantment_glow: true
+        item_name: '&a&lMeth'

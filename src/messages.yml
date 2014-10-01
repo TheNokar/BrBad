@@ -1,0 +1,10 @@
+shop:
+    sold_complete: '&cYou have sold item {item}'
+    buy_complete: '&bYou have bought {amount} {item}'
+    shop_create: '&aYou created shop that sells {item}'
+cop_stick:
+    jail_name: jail
+    drugs_found_player: '&b{cop} &cfound drugs on you! You have been jailed!'
+    drugs_not_found_player: '&a{cop} &esearched you and found nothing!'
+    drugs_found_cop: '&cYou found drugs on &4{player}&c. He as been jailed!'
+    drugs_not_found_cop: '&aYou searched &c{player} &aand found nothing...'
