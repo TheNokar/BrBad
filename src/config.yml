@@ -1,0 +1,13 @@
+mysql:
+    host: localhost
+    port: 3306
+    database: minecraft
+    username: root
+    password: root
+shop:
+    log: true
+cop_stick:
+    give_cop_drugs: false
+    drugs:
+    - 353
+    - 351:2
