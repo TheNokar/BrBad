@@ -28,7 +28,9 @@ public class BrBad extends JavaPlugin {
 		ItemsList.addRecipie(this);
 		Listeners(getServer().getPluginManager());
 		db = new DatabaseConnection(this);
-		db.getAllShops();
+		for(Shops shop : db.getAllShops()) {
+			shop.SetupShop();
+		}
 	}
 	
 	public void onDisable() {
@@ -53,15 +55,6 @@ public class BrBad extends JavaPlugin {
 	public static boolean isShowcaseItem(Item item) {
 		for(ShowCaseItem usItem : si) {
 			if(usItem.isItem(item) == true) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static boolean isShowcaseBlock(Location block) {
-		for(ShowCaseItem usItem : si) {
-			if(usItem.isBlockUnder(block) == true) {
 				return true;
 			}
 		}

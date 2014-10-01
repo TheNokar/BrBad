@@ -32,6 +32,9 @@ public class ItemsList {
 			im.setDisplayName(Utils.buildString(Config.itemcooker.getString("items."+r+".item_name")));
 			item.setItemMeta(im);
 			if(Config.itemcooker.getBoolean("items."+r+".enchantment_glow")) {
+				if(item.containsEnchantment(Glow.getGlow())) {
+					item.removeEnchantment(Glow.getGlow());
+				}
 				Glow.addGlow(item);
 			}
 			FurnaceRecipe recipe = new FurnaceRecipe(item, Material.getMaterial(Integer.parseInt(Config.itemcooker.getString("items."+r+".crafting"))));
@@ -47,6 +50,15 @@ public class ItemsList {
 			}
 		}
 		return false;
+	}
+
+	public static ItemStack isCustomItemByName(String i) {
+		for(ItemStack is : customItems) {
+			if(is.getItemMeta().getDisplayName().endsWith(i)) {
+				return is;
+			}
+		}
+		return null;
 	}
 	
 }

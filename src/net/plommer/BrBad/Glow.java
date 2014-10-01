@@ -8,9 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import java.lang.reflect.Field;
  
 public class Glow extends EnchantmentWrapper {
- 
-    private static Enchantment glow;
- 
+	  
     public Glow(int id) {
         super(id);
     }
@@ -46,31 +44,23 @@ public class Glow extends EnchantmentWrapper {
     }
  
     public static Enchantment getGlow() {
-        Enchantment g = Enchantment.getById(255);
-        if(g == null) return null;
-        if (g instanceof Glow) {
-            glow = (Glow) g;
-            if (glow != null)return glow;
-            try {
-                Field f = Enchantment.class.getDeclaredField("acceptingNew");
-                f.setAccessible(true);
-                f.set(null, true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            glow = new Glow(255);
-            Enchantment.registerEnchantment(glow);
+    	Enchantment glow = getById(255);
+        if(glow != null)
             return glow;
-        } else {
-            return Enchantment.getById(255); //Is null on first ever start so yea.
+        try {
+            Field f = Enchantment.class.getDeclaredField("acceptingNew");
+            f.setAccessible(true);
+            f.set(null, true);
+        } catch(Exception e) {
+            e.printStackTrace();
         }
+        glow = new Glow(255);
+        Enchantment.registerEnchantment(glow);
+        return glow;
     }
  
     public static void addGlow(ItemStack item) {
-    	
         Enchantment glow = getGlow();
-        if(glow != null)
         item.addEnchantment(glow, 1);
     }
-    
 }

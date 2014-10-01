@@ -27,7 +27,7 @@
         <artifactId>maven-jar-plugin</artifactId>
         <version>2.3.1</version>
         <configuration>
-          <outputDirectory>C:\Users\Nokar\Desktop\Spigot\plugins</outputDirectory>
+          <outputDirectory>C:\Users\NokkviReyr\Desktop\Bukkit\plugins</outputDirectory>
         </configuration>
       </plugin>
     </plugins>
