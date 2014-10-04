@@ -53,6 +53,7 @@ public class BrBad extends JavaPlugin {
 		getCommand("brbad").setExecutor(new CommandHandler(this));
 		commands.add(new ZoneToolCommand());
 		commands.add(new ZoneCreateCommand());
+		commands.add(new ReloadCommand());
 	}
 	
 	public void setupConfigs() {
