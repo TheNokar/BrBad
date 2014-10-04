@@ -3,26 +3,21 @@ package net.plommer.BrBad.Shop;
 import java.util.UUID;
 
 import net.plommer.BrBad.BrBad;
-import net.plommer.BrBad.Configs.Config;
 import net.plommer.BrBad.Showcase.ShowCaseItem;
-import net.plommer.BrBad.Utils.ItemsList;
 import net.plommer.BrBad.Utils.Utils;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Shops {
 
 	public static enum Type {
-		SELLING,
-		BUYING
+		SELL,
+		BUY
 	}
 	
 	private Location loc;
@@ -31,6 +26,7 @@ public class Shops {
 	private int price;
 	private Player player;
 	private int amount;
+	public int si;
 	
 	public Shops(Location loc, ItemStack item, Type type, int price, int amount, Player player) {
 		setLocation(loc);
@@ -77,7 +73,7 @@ public class Shops {
 	}
 	
 	public void SetupShop(JavaPlugin plugin) {
-		if(getAttachedBlock(loc.getBlock()).getType().equals(Material.CHEST)) {
+		if(ShopsUtils.getAttachedBlock(loc.getBlock()) != null && ShopsUtils.getAttachedBlock(loc.getBlock()).getLocation().add(0,1,0).getBlock().getType() == Material.AIR) {
 			Sign s = (org.bukkit.block.Sign) loc.getBlock().getState();
 			String dn = Utils.removeChar(getItem().getItemMeta().getDisplayName());
 			if(dn == null) {
@@ -86,57 +82,12 @@ public class Shops {
 			s.setLine(2, Utils.buildString("&0" + getAmount()));
 			s.setLine(3, Utils.buildString("&0" + dn));
 			s.setLine(1, Utils.buildString("&3&n$" + getPrice()));
-			BrBad.si.add(new ShowCaseItem(getItem().clone(), getAttachedBlock(loc.getBlock()).getLocation(), plugin));
+			si = BrBad.si.size();
+			BrBad.si.add(new ShowCaseItem(getItem().clone(), ShopsUtils.getAttachedBlock(loc.getBlock()).getLocation(), plugin));
 			s.update();
 		} else {
-			Utils.sendMessage(player, "&cYou need to place the sign on a chest!");
+			System.out.print("This dosen't seem to be working :/");
 		}
-	}
-	
-	public Block getAttachedBlock(Block sb) {
-		if (sb.getType() == Material.WALL_SIGN || sb.getType() == Material.SIGN_POST) {
-			org.bukkit.material.Sign s = (org.bukkit.material.Sign) sb.getState().getData();  // org.bukkit.material.Sign
-			return sb.getRelative(s.getAttachedFace());
-		} else {
-			return null;
-		}
-	}
-	
-	public static Location toLocation(double[] pos, String world) {
-		return new Location(Bukkit.getWorld(world), pos[0], pos[1], pos[2], 0, 0);
-	}
-	
-	public static void ShopClick(Shops shop, Player player, Type type) {
-		ItemStack item = shop.getItem();
-		item.setAmount(shop.getAmount());
-		if(hasItemInInventory(shop.getItem(), player.getInventory()) >= shop.getAmount()) {
-			player.getInventory().removeItem(new ItemStack[] {item});
-		} else {
-			Utils.sendMessage(player, Config.player_no_item);
-		}
-		player.updateInventory();
-	}
-	
-	public static int hasItemInInventory(ItemStack item, Inventory inv) {
-		int am = 0;
-		boolean isCustom = false;
-		if(ItemsList.isCustomItem(item)) {
-			isCustom = true;
-		}
-		for(ItemStack is : inv.getContents()) {
-			if(is != null && isCustom == false) {
-				if(is.getType().equals(item.getType())) {
-					am += is.getAmount();
-				}
-			} else if(is != null && isCustom == true) {
-				if(ItemsList.isCustomItem(is) == true) {
-					if(is.getItemMeta().equals(item.getItemMeta())) {
-						am += is.getAmount();
-					}
-				}
-			}
-		}
-		return am;
 	}
 	
 }

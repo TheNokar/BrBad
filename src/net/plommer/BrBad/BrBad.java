@@ -5,11 +5,15 @@ import java.util.HashMap;
 
 import net.plommer.BrBad.Commands.*;
 import net.plommer.BrBad.Configs.GenerateConfigs;
+import net.plommer.BrBad.CopStick.CopSafeZone;
+import net.plommer.BrBad.CopStick.DrugInteractEvent;
+import net.plommer.BrBad.Listenners.CraftingListener;
 import net.plommer.BrBad.Listenners.ShopListener;
 import net.plommer.BrBad.MySQL.DatabaseConnection;
 import net.plommer.BrBad.Shop.Shops;
 import net.plommer.BrBad.Showcase.ShowCaseItem;
 import net.plommer.BrBad.Utils.ItemsList;
+import net.plommer.BrBad.Utils.SetupVault;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Item;
@@ -24,12 +28,18 @@ public class BrBad extends JavaPlugin {
 	public static DatabaseConnection db;
 	
 	public void onEnable() {
-		setupConfigs();
-		ItemsList.addRecipie(this);
-		Listeners(getServer().getPluginManager());
-		db = new DatabaseConnection(this);
-		for(Shops shop : db.getAllShops()) {
-			shop.SetupShop(this);
+		if(getServer().getPluginManager().getPlugin("Vault") != null) {
+			setupConfigs();
+			ItemsList.addRecipie(this);
+			Listeners(getServer().getPluginManager());
+			db = new DatabaseConnection(this);
+			for(Shops shop : db.getAllShops()) {
+				shop.SetupShop(this);
+			}
+			new SetupVault(this);
+			setUpCommands();
+		} else {
+			getServer().getPluginManager().disablePlugin(this);
 		}
 	}
 	
@@ -39,10 +49,17 @@ public class BrBad extends JavaPlugin {
 		}
 	}
 	
+	public void setUpCommands() {
+		getCommand("brbad").setExecutor(new CommandHandler(this));
+		commands.add(new ZoneToolCommand());
+		commands.add(new ZoneCreateCommand());
+	}
+	
 	public void setupConfigs() {
 		gc.put("config", new GenerateConfigs(this, "config"));
 		gc.put("messages", new GenerateConfigs(this, "messages"));
 		gc.put("item_cooker", new GenerateConfigs(this, "item_cooker"));
+		gc.put("drug_items", new GenerateConfigs(this, "drug_items"));
 		for(GenerateConfigs g : gc.values()) {
 			g.setup();
 		}
@@ -50,6 +67,8 @@ public class BrBad extends JavaPlugin {
 	
 	public void Listeners(PluginManager pm) {
 		pm.registerEvents(new ShopListener(this), this);
+		pm.registerEvents(new CraftingListener(this), this);
+		pm.registerEvents(new DrugInteractEvent(), this);
 	}
 	
 	public static boolean isShowcaseItem(Item item) {
@@ -58,6 +77,14 @@ public class BrBad extends JavaPlugin {
 				return true;
 			}
 		}
+		return false;
+	}
+	
+	public static boolean isInRegion(Location loc) {
+		for (CopSafeZone z : BrBad.db.getZones()) {
+			if (z.isInRegion(loc))
+				return true;
+			}
 		return false;
 	}
 	

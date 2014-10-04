@@ -1,6 +1,14 @@
 items:
-     meth:
-        crafting: 353
-        item_type: 353
+     methamphetamine:
+        crafting: 338
+        output_type: 353
+        furnace: true
         enchantment_glow: true
-        item_name: '&a&lMeth'
+        item_name: '&0Methamphetamine'
+     bluesky:
+        crafting: '&0Methamphetamine'
+        crafting-2: '351:4'
+        output_type: 353
+        furnace: false
+        enchantment_glow: true
+        item_name: '&0Blue Sky'

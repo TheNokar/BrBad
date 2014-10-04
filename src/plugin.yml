@@ -3,3 +3,28 @@ version: 0.0.1
 author: [TheNokar]
 main: net.plommer.BrBad.BrBad
 depend: [Vault]
+commands:
+    brbad:
+        description: BrBad badshitt!
+        aliases: [bb, bad]
+permissions:
+    brbad.*:
+        default: op
+        description: Everything!!
+        children:
+          brbad.create: true
+          brbad.cop: true
+          brbad.create.shop: true
+          brbad.shop: true
+    brbad.create:
+        description: Allows you to creatething
+        default: op
+    brbad.cop:
+        description: Allows you to use the cop stick
+        default: op
+    brbad.create.shop:
+        description: Allows you to create shops
+        default: op
+    brbad.use.shop:
+        description: Allows you to use shops
+        default: true

@@ -1,9 +1,9 @@
 shop:
-    sold_complete: '&cYou have sold item {item}'
-    buy_complete: '&bYou have bought {amount} {item}'
+    sold_complete: '&aYou have sold &6{amount} &6{item} &aand received &6{money}'
+    buy_complete: '&bYou have bought &6{amount} {item}'
     player_no_item: '&cYou do not have enough items to sell!'
 cop_stick:
-    jail_name: jail
+    drugs_player_in_safezone: '&4{player} &cis in a safe zone!'
     drugs_found_player: '&b{cop} &cfound drugs on you! You have been jailed!'
     drugs_not_found_player: '&a{cop} &esearched you and found nothing!'
     drugs_found_cop: '&cYou found drugs on &4{player}&c. He as been jailed!'

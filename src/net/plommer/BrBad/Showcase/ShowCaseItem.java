@@ -2,6 +2,7 @@ package net.plommer.BrBad.Showcase;
 
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
@@ -24,11 +25,17 @@ public class ShowCaseItem {
 		ItemMeta im = item.getItemMeta();
 		im.setDisplayName("Displays"+rand.nextInt(500));
 		item.setItemMeta(im);
+		setblockUnderLoc(loc);
 		setLocation(loc);
-		setblockUnderLoc(blockUnderLoc);
 		setItem(loc.getWorld().dropItem(getLocation(), item));
 		getItem().setVelocity(new Vector(0, 0.1, 0));
 		getItem().setMetadata("Displays", new FixedMetadataValue(plugin, 0));
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+			@Override
+			public void run() {
+				updatePosition();
+			}
+		}, 100L, 100L);
 	}
 	
 	public void setItem(Item item) {
@@ -44,8 +51,9 @@ public class ShowCaseItem {
 	}
 	
 	public void setLocation(Location loc) {
+		loc = loc.getBlock().getLocation();
 		Vector vect = loc.toVector();
-		vect.add(new Vector(0.5,0.6,0.5));
+		vect.add(new Vector(0.5,1.3,0.5));
 		loc = vect.toLocation(loc.getWorld());
 		this.loc = loc;
 		if(item != null) {
@@ -75,6 +83,14 @@ public class ShowCaseItem {
 	
 	public void removeShowcase() {
 		this.getItem().remove();
+	}
+	
+	public void updatePosition() {
+		if (getItem().getLocation().getY() <= getBlockUnderLoc().getBlockY() + 1) {
+			setLocation(getBlockUnderLoc());
+			getItem().teleport(getLocation());
+			getItem().setVelocity(new Vector(0, 0.1, 0));
+		}
 	}
 	
 }

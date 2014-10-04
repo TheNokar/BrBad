@@ -7,7 +7,5 @@ mysql:
 shop:
     log: true
 cop_stick:
-    give_cop_drugs: false
-    drugs:
-    - 353
-    - 351:2
+    jail_name: jail
+    jail_time: 10 #Minutes
