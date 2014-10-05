@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.plommer.BrBad.Commands.*;
+import net.plommer.BrBad.Configs.Config;
 import net.plommer.BrBad.Configs.GenerateConfigs;
 import net.plommer.BrBad.CopStick.CopSafeZone;
 import net.plommer.BrBad.CopStick.DrugInteractEvent;
@@ -26,10 +27,13 @@ public class BrBad extends JavaPlugin {
 	public ArrayList<BaseCommand> commands = new ArrayList<BaseCommand>();
 	public static HashMap<String, GenerateConfigs> gc = new HashMap<String, GenerateConfigs>();
 	public static DatabaseConnection db;
+	public static BrBad bad;
 	
 	public void onEnable() {
 		if(getServer().getPluginManager().getPlugin("Vault") != null) {
+			bad = this;
 			setupConfigs();
+			new Config();
 			ItemsList.addRecipie(this);
 			Listeners(getServer().getPluginManager());
 			db = new DatabaseConnection(this);
@@ -56,14 +60,18 @@ public class BrBad extends JavaPlugin {
 		commands.add(new ReloadCommand());
 	}
 	
-	public void setupConfigs() {
-		gc.put("config", new GenerateConfigs(this, "config"));
-		gc.put("messages", new GenerateConfigs(this, "messages"));
-		gc.put("item_cooker", new GenerateConfigs(this, "item_cooker"));
-		gc.put("drug_items", new GenerateConfigs(this, "drug_items"));
+	public static void setupConfigs() {
+		gc.put("config", new GenerateConfigs(BrBad.bad, "config"));
+		gc.put("messages", new GenerateConfigs(BrBad.bad, "messages"));
+		gc.put("item_cooker", new GenerateConfigs(BrBad.bad, "item_cooker"));
+		gc.put("drug_items", new GenerateConfigs(BrBad.bad, "drug_items"));
 		for(GenerateConfigs g : gc.values()) {
 			g.setup();
 		}
+	}
+	
+	public static void clearConfigs() {
+		gc.clear();
 	}
 	
 	public void Listeners(PluginManager pm) {
