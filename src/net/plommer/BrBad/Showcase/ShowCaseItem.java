@@ -86,7 +86,7 @@ public class ShowCaseItem {
 	}
 	
 	public void updatePosition() {
-		if (getItem().getLocation().getY() <= getBlockUnderLoc().getBlockY() + 1) {
+		if (getItem() != null && getItem().getLocation().getY() <= getBlockUnderLoc().getBlockY() + 1) {
 			setLocation(getBlockUnderLoc());
 			getItem().teleport(getLocation());
 			getItem().setVelocity(new Vector(0, 0.1, 0));

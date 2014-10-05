@@ -9,6 +9,7 @@ import net.plommer.BrBad.Utils.Utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,17 +26,29 @@ public class DrugInteractEvent implements Listener {
 	
 	@EventHandler
 	public void zoneThing(PlayerInteractEvent event) {
-		if(event.getPlayer().getItemInHand().getItemMeta().equals(ItemsList.zoneStick().getItemMeta())) {
-			if(event.getPlayer().hasPermission(Config.permission_node + "create.zone")) {
-				if(event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-					loc1 = event.getClickedBlock().getLocation();
-					Utils.sendMessage(event.getPlayer(), "&eFirst pos: &a"+loc1.getBlockX()+ ", " +loc1.getBlockY()+ ", " +loc1.getBlockZ());
+		if(event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+			if(event.getPlayer().getItemInHand().getType() != Material.AIR) {
+				if(event.getPlayer().getItemInHand().getItemMeta().equals(ItemsList.zoneStick().getItemMeta())) {
+					if(event.getPlayer().hasPermission(Config.permission_node + "create.zone")) {
+						if(event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+							loc1 = event.getClickedBlock().getLocation();
+							if(loc1 != null) {
+								Utils.sendMessage(event.getPlayer(), "&eFirst pos: &a"+loc1.getBlockX()+ ", " +loc1.getBlockY()+ ", " +loc1.getBlockZ());
+							} else {
+								Utils.sendMessage(event.getPlayer(), "&cError try again");
+							}
+						}
+						if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+							loc2 = event.getClickedBlock().getLocation();
+							if(loc2 != null) {
+								Utils.sendMessage(event.getPlayer(), "&eSecond pos: &a"+loc2.getBlockX()+ ", " +loc2.getBlockY()+ ", " +loc2.getBlockZ());
+							} else {
+								Utils.sendMessage(event.getPlayer(), "&cError try again");
+							}
+						}
+						event.setCancelled(true);
+					}
 				}
-				if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-					loc2 = event.getClickedBlock().getLocation();
-					Utils.sendMessage(event.getPlayer(), "&eSecond pos: &a"+loc1.getBlockX()+ ", " +loc1.getBlockY()+ ", " +loc1.getBlockZ());
-				}
-				event.setCancelled(true);
 			}
 		}
 	}

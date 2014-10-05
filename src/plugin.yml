@@ -16,11 +16,19 @@ permissions:
           brbad.cop: true
           brbad.create.shop: true
           brbad.shop: true
+          brbad.remove.shop: true
+          brbad.create.zone: true
     brbad.create:
         description: Allows you to creatething
         default: op
+    brbad.create.zone:
+        description: Allows you to creatething
+        default: op    
     brbad.cop:
         description: Allows you to use the cop stick
+        default: op
+    brbad.remove.shop:
+        description: Allows you to create shops
         default: op
     brbad.create.shop:
         description: Allows you to create shops
