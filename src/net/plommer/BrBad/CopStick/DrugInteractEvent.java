@@ -71,12 +71,11 @@ public class DrugInteractEvent implements Listener {
 						if(isFound.contains("true")) {
 							BrBad.db.addCopLog(player, event.getPlayer());
 							Utils.sendMessage(event.getPlayer(), Config.drugs_found_cop(player));
-							Utils.sendMessage(player, Config.drugs_found_player(player));
-							System.out.print(Config.jail_name);
-							Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "jail " + player.getName() + " " + Config.jail_name + " " + Config.jail_time);
+							Utils.sendMessage(player, Config.drugs_found_player(event.getPlayer()));
+							Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "jail " + player.getName() + " " + Config.jail_name + " " + Config.jail_time + "m");
 						} else {
 							Utils.sendMessage(event.getPlayer(), Config.drugs_not_found_cop(player));
-							Utils.sendMessage(player, Config.drugs_not_found_player(player));
+							Utils.sendMessage(player, Config.drugs_not_found_player(event.getPlayer()));
 						}
 					} else {
 						Utils.sendMessage(event.getPlayer(), Config.drugs_player_in_safezone(player));
