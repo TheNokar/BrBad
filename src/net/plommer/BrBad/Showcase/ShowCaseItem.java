@@ -22,16 +22,18 @@ public class ShowCaseItem {
 	private Material type;
 	
 	public ShowCaseItem(ItemStack item, Location loc, JavaPlugin plugin) {
-		item.setAmount(1);
-		Random rand = new Random();
-		ItemMeta im = item.getItemMeta();
-		im.setDisplayName("Displays"+rand.nextInt(500));
-		item.setItemMeta(im);
-		setblockUnderLoc(loc);
-		setLocation(loc);
-		setItem(loc.getWorld().dropItem(getLocation(), item));
-		getItem().setVelocity(new Vector(0, 0.1, 0));
-		getItem().setMetadata("Displays", new FixedMetadataValue(plugin, 0));
+		if(getItem() == null) {
+			item.setAmount(1);
+			Random rand = new Random();
+			ItemMeta im = item.getItemMeta();
+			im.setDisplayName("Displays"+rand.nextInt(500));
+			item.setItemMeta(im);
+			setblockUnderLoc(loc);
+			setLocation(loc);
+			setItem(loc.getWorld().dropItem(getLocation(), item));
+			getItem().setVelocity(new Vector(0, 0.1, 0));
+			getItem().setMetadata("Displays", new FixedMetadataValue(plugin, 0));
+		}
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			@Override
 			public void run() {
