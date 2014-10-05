@@ -7,15 +7,15 @@ import org.bukkit.entity.Player;
 public class PlayerMoneyDeposit {
 
 	public static void removeMoney(Player player, int amount) {
-		SetupVault.economy.withdrawPlayer(player, amount);
+		SetupVault.economy.withdrawPlayer(player.getName(), amount);
 	}
 	
 	public static void addMoney(Player player, int amount) {
-		SetupVault.economy.depositPlayer(player, amount);
+		SetupVault.economy.depositPlayer(player.getName(), amount);
 	}
 
 	public static boolean hasMoney(Player player, int money) {
-		if(SetupVault.economy.getBalance(player) >= money) {
+		if(SetupVault.economy.getBalance(player.getName()) >= money) {
 			return true;
 		}
 		return false;
