@@ -2,6 +2,8 @@ package net.plommer.BrBad.Showcase;
 
 import java.util.Random;
 
+import net.plommer.BrBad.BrBad;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -22,7 +24,13 @@ public class ShowCaseItem {
 	private Material type;
 	
 	public ShowCaseItem(ItemStack item, Location loc, JavaPlugin plugin) {
-		if(getItem() == null) {
+		boolean isShowcase = false;
+		for(ShowCaseItem sit : BrBad.si) {
+			if(sit.getBlockUnderLoc().equals(loc) && isShowcase == false) {
+				isShowcase = true;
+			}
+		}
+		if(getItem() == null && isShowcase == false) {
 			item.setAmount(1);
 			Random rand = new Random();
 			ItemMeta im = item.getItemMeta();
@@ -38,7 +46,6 @@ public class ShowCaseItem {
 			@Override
 			public void run() {
 				updatePosition();
-				checkForDupedItem();
 			}
 		}, 100L, 100L);
 	}
@@ -88,17 +95,6 @@ public class ShowCaseItem {
 	
 	public void removeShowcase() {
 		this.getItem().remove();
-	}
-	
-	public void checkForDupedItem() {
-		Chunk c = getItem().getLocation().getChunk();
-		for (Entity e : c.getEntities()) {
-			if(getItem() != null) {
-				if (e.getLocation().getBlock().equals(getBlockUnderLoc().getBlock()) && e instanceof Item && !e.equals(item)) {
-					e.remove();
-				}
-			}
-		}
 	}
 	
 	public void updatePosition() {

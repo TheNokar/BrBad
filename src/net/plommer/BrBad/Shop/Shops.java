@@ -27,6 +27,7 @@ public class Shops {
 	private Player player;
 	private int amount;
 	public int si;
+	public ShowCaseItem sit;
 	
 	public Shops(Location loc, ItemStack item, Type type, int price, int amount, Player player) {
 		setLocation(loc);
@@ -83,7 +84,8 @@ public class Shops {
 			s.setLine(3, Utils.buildString("&0" + dn));
 			s.setLine(1, Utils.buildString("&3&n$" + getPrice()));
 			si = BrBad.si.size();
-			BrBad.si.add(new ShowCaseItem(getItem().clone(), ShopsUtils.getAttachedBlock(loc.getBlock()).getLocation(), plugin));
+			sit = new ShowCaseItem(getItem().clone(), ShopsUtils.getAttachedBlock(loc.getBlock()).getLocation(), plugin);
+			BrBad.si.add(sit);
 			s.update();
 		} else {
 			BrBad.db.removeShop(this);

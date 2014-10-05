@@ -73,7 +73,7 @@ public class ShopsUtils {
 		}
 		for(ItemStack is : inv.getContents()) {
 			if(is != null && isCustom == false) {
-				if(is.getType().equals(item.getType())) {
+				if(is.getType().equals(item.getType()) && is.getData().equals(item.getData())) {
 					am += is.getAmount();
 				}
 			} else if(is != null && isCustom == true) {
