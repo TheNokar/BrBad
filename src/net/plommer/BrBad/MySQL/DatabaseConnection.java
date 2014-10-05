@@ -44,7 +44,6 @@ public class DatabaseConnection {
 			return DriverManager.getConnection("jdbc:mysql://" + Config.mysql_host + ":" + Config.mysql_port + "/" + Config.mysql_database + "?autoReconnect=true&user=" + Config.mysql_username + "&password=" + Config.mysql_password);
 		} catch (SQLException ex) {
 			plugin.getLogger().info("Failed to connect to mysql. Plugin is now shutting down!");
-			plugin.getServer().getPluginManager().disablePlugin(plugin);
 		}
 		return null;
 	}
