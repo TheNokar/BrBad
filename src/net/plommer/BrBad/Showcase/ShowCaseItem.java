@@ -24,13 +24,7 @@ public class ShowCaseItem {
 	private Material type;
 	
 	public ShowCaseItem(ItemStack item, Location loc, JavaPlugin plugin) {
-		boolean isShowcase = false;
-		for(ShowCaseItem sit : BrBad.si) {
-			if(sit.getBlockUnderLoc().equals(loc) && isShowcase == false) {
-				isShowcase = true;
-			}
-		}
-		if(getItem() == null && isShowcase == false) {
+		if(getItem() == null) {
 			item.setAmount(1);
 			Random rand = new Random();
 			ItemMeta im = item.getItemMeta();
