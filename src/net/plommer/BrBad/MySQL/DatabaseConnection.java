@@ -38,7 +38,7 @@ public class DatabaseConnection {
 		}
 	}
 	
-	private Connection db() {
+	public Connection db() {
 		try {
 			return DriverManager.getConnection("jdbc:mysql://" + Config.mysql_host + ":" + Config.mysql_port + "/" + Config.mysql_database + "?autoReconnect=true&user=" + Config.mysql_username + "&password=" + Config.mysql_password);
 		} catch (SQLException ex) {
@@ -72,6 +72,7 @@ public class DatabaseConnection {
 				if(ps != null) {
 					ps.close();
 				}
+				db().close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -99,6 +100,8 @@ public class DatabaseConnection {
 				if(ps != null) {
 					ps.close();
 				}
+				db().close();
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -121,6 +124,8 @@ public class DatabaseConnection {
 				if(ps != null) {
 					ps.close();
 				}
+				db().close();
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -148,6 +153,8 @@ public class DatabaseConnection {
 				if(ps != null) {
 					ps.close();
 				}
+				db().close();
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -176,6 +183,8 @@ public class DatabaseConnection {
 				if(ps != null) {
 					ps.close();
 				}
+				db().close();
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -200,6 +209,8 @@ public class DatabaseConnection {
 				if(ps != null) {
 					ps.close();
 				}
+				db().close();
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -230,6 +241,8 @@ public class DatabaseConnection {
 				if(ps != null) {
 					ps.close();
 				}
+				db().close();
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -263,6 +276,8 @@ public class DatabaseConnection {
 				if(ps != null) {
 					ps.close();
 				}
+				db().close();
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
