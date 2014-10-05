@@ -86,7 +86,7 @@ public class Shops {
 			BrBad.si.add(new ShowCaseItem(getItem().clone(), ShopsUtils.getAttachedBlock(loc.getBlock()).getLocation(), plugin));
 			s.update();
 		} else {
-			System.out.print("This dosen't seem to be working :/");
+			BrBad.db.removeShop(this);
 		}
 	}
 	
