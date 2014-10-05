@@ -32,6 +32,7 @@ public class DatabaseConnection {
 			this.db().prepareStatement(this.getSQLTables("shopslog.sql")).execute();
 			this.db().prepareStatement(this.getSQLTables("cops.sql")).execute();
 			this.db().prepareStatement(this.getSQLTables("zone.sql")).execute();
+			this.db().prepareStatement("SET GLOBAL max_connections=2048;");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
