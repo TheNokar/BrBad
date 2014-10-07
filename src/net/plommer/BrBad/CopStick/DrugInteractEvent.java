@@ -58,27 +58,29 @@ public class DrugInteractEvent implements Listener {
 		ArrayList<String> isFound = new ArrayList<String>();
 		if(event.getRightClicked() instanceof Player) {
 			Player player = (Player)event.getRightClicked();
-			if(event.getPlayer().getItemInHand().getItemMeta().equals(ItemsList.copStick().getItemMeta())) {
-				if(event.getPlayer().hasPermission(Config.permission_node + "cop")) {
-					if(!BrBad.isInRegion(player.getLocation())) {
-						for(String s : Config.dilist) {
-							if(DrugItems.removeItemsPrivate(player.getInventory(), s)) {
-								isFound.add("true");
-							} else {
-								isFound.add("false");
+			if(event.getPlayer().getItemInHand() != null) {
+				if(event.getPlayer().getItemInHand().getItemMeta().equals(ItemsList.copStick().getItemMeta())) {
+					if(event.getPlayer().hasPermission(Config.permission_node + "cop")) {
+						if(!BrBad.isInRegion(player.getLocation())) {
+							for(String s : Config.dilist) {
+								if(DrugItems.removeItemsPrivate(player.getInventory(), s)) {
+									isFound.add("true");
+								} else {
+									isFound.add("false");
+								}
 							}
-						}
-						if(isFound.contains("true")) {
-							BrBad.db.addCopLog(player, event.getPlayer());
-							Utils.sendMessage(event.getPlayer(), Config.drugs_found_cop(player));
-							Utils.sendMessage(player, Config.drugs_found_player(event.getPlayer()));
-							Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "jail " + player.getName() + " " + Config.jail_name + " " + Config.jail_time + "m");
+							if(isFound.contains("true")) {
+								BrBad.db.addCopLog(player, event.getPlayer());
+								Utils.sendMessage(event.getPlayer(), Config.drugs_found_cop(player));
+								Utils.sendMessage(player, Config.drugs_found_player(event.getPlayer()));
+								Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "jail " + player.getName() + " " + Config.jail_name + " " + Config.jail_time + "m");
+							} else {
+								Utils.sendMessage(event.getPlayer(), Config.drugs_not_found_cop(player));
+								Utils.sendMessage(player, Config.drugs_not_found_player(event.getPlayer()));
+							}
 						} else {
-							Utils.sendMessage(event.getPlayer(), Config.drugs_not_found_cop(player));
-							Utils.sendMessage(player, Config.drugs_not_found_player(event.getPlayer()));
+							Utils.sendMessage(event.getPlayer(), Config.drugs_player_in_safezone(player));
 						}
-					} else {
-						Utils.sendMessage(event.getPlayer(), Config.drugs_player_in_safezone(player));
 					}
 				}
 			}
