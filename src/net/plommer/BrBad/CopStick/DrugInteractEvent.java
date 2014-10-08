@@ -17,6 +17,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class DrugInteractEvent implements Listener {
@@ -88,17 +89,9 @@ public class DrugInteractEvent implements Listener {
 	}
 	
 	@EventHandler
-	public void onJoin(PlayerJoinEvent event) {
-		Player player = event.getPlayer();
-		if(event.getPlayer().hasPermission(Config.permission_node + "cop")) {
-			if(!player.getInventory().contains(ItemsList.copStick())) {
-				if(player.getInventory().getItem(8) != null) {
-					ItemStack a = player.getInventory().getItem(4);
-					player.getInventory().addItem(a);
-					player.getInventory().remove(ItemsList.copStick());
-				}
-				player.getInventory().setItem(4, ItemsList.copStick());
-			}
+	public void onJoin(PlayerPickupItemEvent event) {
+		if(event.getItem().getItemStack().getItemMeta() == ItemsList.copStick().getItemMeta()) {
+			event.getItem().setItemStack(new ItemStack(Material.AIR));
 		}
 	}
 	

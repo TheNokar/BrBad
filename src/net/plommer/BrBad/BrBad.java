@@ -58,6 +58,7 @@ public class BrBad extends JavaPlugin {
 		commands.add(new ZoneToolCommand());
 		commands.add(new ZoneCreateCommand());
 		commands.add(new ReloadCommand());
+		commands.add(new CopstickCommand());
 	}
 	
 	public static void setupConfigs() {
